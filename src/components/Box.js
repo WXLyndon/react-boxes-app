@@ -1,33 +1,28 @@
 import React, { Component } from "react";
 
 class Box extends Component {
-  state = {
-    x: 0,
-  };
-
-  handleClickLeft = (step) => {
-    this.setState({ x: this.state.x - step });
-  };
-
-  handleClickRight = (step) => {
-    this.setState({ x: this.state.x + step });
-  };
-
   render() {
     return (
       <>
+        {this.props.children}
         <div style={this.getStyles()}> {this.toString()}</div>
         <button
-          onClick={() => this.handleClickLeft(10)}
+          onClick={this.props.onClickLeft}
           className="btn btn-primary m-2"
         >
           left
         </button>
         <button
-          onClick={() => this.handleClickRight(10)}
+          onClick={this.props.onClickRight}
           className="btn btn-primary m-2"
         >
           right
+        </button>
+        <button
+          className="btn btn-danger m-2"
+          onClick={() => this.props.onDelete(this.props.box.id)}
+        >
+          Delete
         </button>
       </>
     );
@@ -42,10 +37,10 @@ class Box extends Component {
       textAlign: "center",
       lineHeight: "50px",
       borderRadius: "5px",
-      marginLeft: this.state.x,
+      marginLeft: this.props.box.x,
     };
 
-    if (this.state.x === 0) {
+    if (this.props.box.x === 0) {
       styles.backgroundColor = "orange";
     }
 
@@ -53,7 +48,7 @@ class Box extends Component {
   }
 
   toString() {
-    const { x } = this.state;
+    const { x } = this.props.box;
     return `x: ${x}`;
   }
 }

@@ -1,36 +1,34 @@
 import React, { Component } from "react";
 import Box from "./Box";
 
-class Boxes extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <button
-          style={{ margin: "15px" }}
-          className="btn btn-info"
-          onClick={this.props.onReset}
+const Boxes = (props) => {
+  return (
+    <React.Fragment>
+      <button
+        style={{ margin: "15px" }}
+        className="btn btn-info"
+        onClick={props.onReset}
+      >
+        Reset
+      </button>
+      {props.boxes.map((box) => (
+        <Box
+          key={box.id}
+          box={box}
+          onClickLeft={() => {
+            props.onClickLeft(box);
+          }}
+          onClickRight={() => {
+            props.onClickRight(box);
+          }}
+          onDelete={props.onDelete}
         >
-          Reset
-        </button>
-        {this.props.boxes.map((box) => (
-          <Box
-            key={box.id}
-            box={box}
-            onClickLeft={() => {
-              this.props.onClickLeft(box);
-            }}
-            onClickRight={() => {
-              this.props.onClickRight(box);
-            }}
-            onDelete={this.props.onDelete}
-          >
-            <h3>Box:</h3>
-            <p>#{box.id}</p>
-          </Box>
-        ))}
-      </React.Fragment>
-    );
-  }
-}
+          <h3>Box:</h3>
+          <p>#{box.id}</p>
+        </Box>
+      ))}
+    </React.Fragment>
+  );
+};
 
 export default Boxes;

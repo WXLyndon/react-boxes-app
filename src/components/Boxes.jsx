@@ -2,62 +2,27 @@ import React, { Component } from "react";
 import Box from "./Box";
 
 class Boxes extends Component {
-  state = {
-    boxes: [
-      { id: 1, x: 0 },
-      { id: 2, x: 10 },
-      { id: 3, x: 20 },
-      { id: 4, x: 30 },
-    ],
-  };
-
-  handleClickLeft = (box) => {
-    const boxes = [...this.state.boxes];
-    const boxIndex = boxes.indexOf(box);
-    boxes[boxIndex].x -= 10;
-    this.setState({ boxes });
-  };
-
-  handleClickRight = (box) => {
-    const boxes = [...this.state.boxes];
-    const boxIndex = boxes.indexOf(box);
-    boxes[boxIndex].x += 10;
-    this.setState({ boxes });
-  };
-
-  handleDelete = (id) => {
-    const boxes = this.state.boxes.filter((box) => box.id !== id);
-    this.setState({ boxes });
-  };
-
-  handleReset = () => {
-    const boxes = this.state.boxes.map((b) => {
-      return { id: b.id, x: 0 };
-    });
-    this.setState({ boxes });
-  };
-
   render() {
     return (
       <React.Fragment>
         <button
           style={{ margin: "15px" }}
           className="btn btn-info"
-          onClick={this.handleReset}
+          onClick={this.props.onReset}
         >
           Reset
         </button>
-        {this.state.boxes.map((box) => (
+        {this.props.boxes.map((box) => (
           <Box
             key={box.id}
             box={box}
             onClickLeft={() => {
-              this.handleClickLeft(box);
+              this.props.onClickLeft(box);
             }}
             onClickRight={() => {
-              this.handleClickRight(box);
+              this.props.onClickRight(box);
             }}
-            onDelete={this.handleDelete}
+            onDelete={this.props.onDelete}
           >
             <h3>Box:</h3>
             <p>#{box.id}</p>
